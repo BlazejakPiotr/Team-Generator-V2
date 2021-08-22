@@ -1,0 +1,32 @@
+body {
+  min-width: 450px;
+  background-color: black;
+  color: #fff;
+  font-family: "Alumni Sans", sans-serif;
+}
+
+h1 {
+  font-size: 5rem;
+  font-weight: 700;
+}
+
+input {
+  width: 70%;
+  height: 2.5rem;
+  padding-left: 1rem;
+}
+
+button {
+  font-size: 1.1rem;
+  margin-left: 0.5rem;
+  height: 2.5rem;
+  padding: 0 2rem 0 2rem;
+}
+
+.teams-container {
+  display: flex;
+  justify-content: space-between;
+}
+.teams-container > .card {
+  width: 48%;
+}
