@@ -11,22 +11,42 @@ h1 {
 }
 
 input {
-  width: 70%;
-  height: 2.5rem;
   padding-left: 1rem;
+  height: 2.5rem;
+}
+
+#user-input {
+  width: 100%;
 }
 
 button {
   font-size: 1.1rem;
   margin-left: 0.5rem;
   height: 2.5rem;
-  padding: 0 2rem 0 2rem;
+  padding: 0 1.5rem 0 1.5rem;
+}
+
+#wait-room > .list-group-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.teams-buttons {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
 }
 
 .teams-container {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
+
 .teams-container > .card {
   width: 48%;
+  margin-bottom: 1.5rem;
+}
+.teams-container > .card > .card-header {
+  color: #000;
 }
