@@ -1,4 +1,4 @@
-let users = [];
+let freeAgents = [];
 let namesArr = ["Alpha", "Bravo", "Charlie", "Delta"];
 let teamsArr = [];
 let teamObj = {
@@ -6,19 +6,23 @@ let teamObj = {
   users: [],
 };
 
+const waitList = document.getElementById("wait-room");
+
 function createUser() {
   let username = document.getElementById("user-input").value;
-  users.push(username);
+  freeAgents.push(username);
   addToWaitingList(username);
 }
 
 function addToWaitingList(user) {
-  console.log(user);
-  let ul = document.getElementById("wait-room");
-  ul.innerHTML += `
-              <li class="list-group-item">
-                 <div> ${user}</div> <div><button onclick="assignUser(${user})" class="shuffle"><i class="fas fa-random"></i></button> <i class="fas fa-trash"></i></div>
-              </li>`;
+  let li = document.createElement("li");
+  li.classList.add("list-group-item");
+  li.innerHTML += `
+ <div>${user}</div> 
+ <div><button onclick="assignUser(this.parentNode.parentNode, '${user}')"><i class="fas fa-random"></i></button> 
+ <button onclick="removeFreeAgent(this.parentNode.parentNode, '${user}')"><i class="fas fa-trash"></i></button></div>
+              `;
+  waitList.appendChild(li);
 }
 
 function createTeams() {
@@ -29,6 +33,7 @@ function createTeams() {
     // creating team object
     let newTeam = Object.create(teamObj);
     newTeam.name = namesArr[i];
+    newTeam.users = [];
     teamsArr.push(newTeam);
 
     // creating DOM element
@@ -45,13 +50,37 @@ function createTeams() {
     teamDiv.appendChild(teamUl);
     teamsContainer.appendChild(teamDiv);
   }
+  if (document.querySelector(".assign-all") === null) {
+    let rightcol = document.querySelector(".col-md-8");
+    let btn = document.createElement("button");
+    btn.setAttribute("onclick", "assignAll()");
+    btn.classList.add("btn-primary", "assign-all");
+    btn.innerText = "Assign All";
+    rightcol.appendChild(btn);
+  }
 }
 
-function assignUser(user) {
-  console.log(user);
-  //   let shuffle = document.querySelector(".shuffle");
-  //   teamsArr[Math.floor(Math.random() * teamsArr.length)].users = [user];
-  //   console.log("assigning to teamArr");
-  //   shuffle.parentNode.parentNode.remove();
-  //   console.log("removing position from waiting list");
+let randomTeamIndex = Math.floor(Math.random() * teamsArr.length);
+
+function assignUser(node, user) {
+  if (teamsArr[0].users !== undefined) {
+    teamsArr[randomTeamIndex].users.push(user);
+    let currentTeam = document.getElementById(teamsArr[randomTeamIndex].name);
+    let li = document.createElement("li");
+    li.classList.add("list-group-item");
+    li.innerText = user;
+    currentTeam.appendChild(li);
+    removeFreeAgent(node, user);
+  } else {
+    alert("Error! Select number of teams");
+  }
+}
+
+function assignAll() {}
+
+// Clearing list node and array
+function removeFreeAgent(node, user) {
+  node.remove();
+  let i = freeAgents.indexOf(user);
+  return freeAgents.splice(i, 1);
 }
